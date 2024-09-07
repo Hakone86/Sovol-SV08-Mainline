@@ -281,7 +281,25 @@ Please SSH into your printer and then do the following steps.
       -> 'Before layer change G-code'<br>
       -> If not in there, add: `TIMELAPSE_TAKE_FRAME`<br>
 
-7. You have now installed mainline Klipper with the Mainsail web interface (and addons)! But there is more to be done to get it all working properly..
+7. Re-Enable ADXL345 for input shaping
+   - Take a look in your printer.cfg file in mainsail. And uncomment the following so your config matches as shown below.
+   - without doing this your klipper will crash when you try and do resonance testing/input shaping.
+    ```bash
+   [adxl345]
+   cs_pin:extra_mcu:PB12
+
+   [resonance_tester]
+   accel_chip: adxl345
+   probe_points:
+      175, 175, 30  # an example175 Y175 Z30
+   #accel_per_hz:50
+   min_freq:1
+   #max_freq:100
+   #max_smoothing:0.2
+   #hz_per_sec:0.5
+   ```
+
+8. You have now installed mainline Klipper with the Mainsail web interface (and addons)! But there is more to be done to get it all working properly..
    - If you haven't rebooted after installing Crowsnest:<br> `sudo reboot`
    - After the board has rebooted, in your browser go to the Mainsail web interface (via the IP address or hostname) and check if it's running.
    - It will give an error since we still have to put our backed-up printer.cfg back.
